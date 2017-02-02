@@ -1,24 +1,41 @@
-# README
+# 은식아 보렴
+파일 두 개 변경함
+### app/models/group.rb 변경 전 코드
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+class Group < ApplicationRecord
+  has_many :users, through: :groups_user
+end
+```
 
-Things you may want to cover:
+### app/models/group.rb 변경 후 코드
 
-* Ruby version
+```
+class Group < ApplicationRecord
+  has_many :groups_users
+  has_many :users, through: :groups_users
+end
+```
 
-* System dependencies
+### app/models/user.rb 변경 전 코드
 
-* Configuration
+```
+class User < ApplicationRecord
+  has_many :comments
+  has_many :posts
+  has_many :likes
+  has_many :groups, through: :groups_user
+end
+```
 
-* Database creation
+### app/models/user.rb 변경 후 코드
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+class User < ApplicationRecord
+  has_many :comments
+  has_many :posts
+  has_many :likes
+  has_many :groups_users
+  has_many :groups, through: :groups_users
+end
+```
